@@ -12,7 +12,7 @@ IF OBJECT_ID('schema.BorrowingsManager','P') IS NOT NULL
 GO
 
 CREATE PROCEDURE schema.BorrowingsManager
-	@ID_User INT = NULL, 
+	@ID_User INT = NULL,
 	@ID_Book INT = NULL,
 	@ResultSP VARCHAR(MAX) OUTPUT
 
@@ -29,7 +29,7 @@ BEGIN
 		IF NOT EXISTS (SELECT NULL FROM schema.Books WHERE ID = @ID_Book) OR NOT EXISTS (SELECT NULL FROM schema.Users WHERE ID = @ID_User)
 		BEGIN
 
-			SET @ResultSP = 'Book or User or both not in the database ' + ERROR_MESSAGE()
+			SET @ResultSP = 'Book or User or both not in the database '
 			PRINT @ResultSP
 			RETURN
 
@@ -38,7 +38,7 @@ BEGIN
 		IF EXISTS (SELECT NULL FROM schema.Borrowings WHERE ID_Book = @ID_Book AND ID_User = @ID_User)
 		BEGIN
 
-			SET @ResultSP = 'Book already borrowed by this user ' + ERROR_MESSAGE()
+			SET @ResultSP = 'Book already borrowed by this user '
 			PRINT @ResultSP
 			RETURN
 
@@ -47,7 +47,7 @@ BEGIN
 		IF (SELECT COUNT(*) FROM schema.Borrowings WHERE ID_User = @ID_User GROUP BY ID_User) >= 5
 		BEGIN
 
-			SET @ResultSP = 'This user has borrowed too many books ' + ERROR_MESSAGE()
+			SET @ResultSP = 'This user has borrowed too many books '
 			PRINT @ResultSP
 			RETURN
 
@@ -56,7 +56,7 @@ BEGIN
 		IF (SELECT Quantity FROM schema.Books WHERE ID = @ID_Book) <= 0
 		BEGIN
 
-			SET @ResultSP = 'No copies available to borrow for this book ' + ERROR_MESSAGE()
+			SET @ResultSP = 'No copies available to borrow for this book '
 			PRINT @ResultSP
 			RETURN
 
@@ -78,6 +78,9 @@ BEGIN
 		-- I subtract the borrowed copy to the table field Quantity
 		UPDATE schema.Books SET Quantity = Quantity -1
 		WHERE ID = @ID_Book
+
+		SET @ResultSP = 'Borrowing registered!'
+		PRINT @ResultSP
 
 	END
 	ELSE
