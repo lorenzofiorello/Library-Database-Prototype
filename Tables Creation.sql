@@ -65,10 +65,10 @@ CREATE TABLE schema.Borrowings (
 
 END
 
--- insert
+-- insert example
 INSERT INTO schema.Books(Title,Author,ISBN, Quantity)
 VALUES ('The Art of War', 'Sun Tzu', 'ABCDEFGHIJ', 1),
  ('The Great Gatsby', 'J. Scott Fitzgerald', 'HGDBNSMKUTRY', 1)
 
  INSERT INTO schema.Users([Name],Surname, ID_Code, Telephone, Email)
-VALUES ('Lorenzo', 'Fiorello', 'GD85494325', '3375894575', 'lore.fiore@gmail.com')
+VALUES ('Lou', 'Read', 'GD85494325', '3375894575', 'lou.reads@gmail.com')
